@@ -11,14 +11,42 @@
 Из корня репозитория, C++23:
 
 ```bash
-clang++ -std=c++23 -O3 -DNDEBUG -march=native -Wall -Werror -Wsign-compare solution/solution.cpp -o /tmp/dfvs
+clang++ -std=c++23 -O3 -DNDEBUG -march=native -Wall -Werror -Wsign-compare solution/solution.cpp -o ./dfvs
 ```
+
+В начале `solution.cpp` через `#include` подключены `basic_algos.cpp` и `structures.cpp`. Препроцессор вставляет их содержимое перед компиляцией, поэтому достаточно передать компилятору только `solution.cpp`. `#pragma once` защищает от повторного включения. Все три исходных файла должны оставаться в папке `solution`; отдельно добавлять подключённые `.cpp` в команду сборки не нужно.
 
 ## Запуск
 
 ```bash
-/tmp/dfvs < task2/graph.gr > /tmp/dfvs.ans
+./dfvs
 ```
+
+Программа читает стандартный ввод (`stdin`) и печатает ответ в стандартный вывод (`stdout`). Первая строка входа — `n m 0`, затем ровно `n` строк исходящих соседей: номера вершин от `1` до `n`, разделённые пробелами. Если исходящих дуг нет, строка пустая.
+
+Пример ввода из задания:
+
+```text
+4 5 0
+2
+3
+1 4
+3
+```
+
+Вывод для этого примера:
+
+```text
+3
+```
+
+Альтернативно можно передать файл с данными и указать файл для ответа:
+
+```bash
+./dfvs < task2/graph.gr > answer.ans
+```
+
+Здесь `<` подаёт содержимое `task2/graph.gr` в `stdin`, а `>` записывает `stdout` в `answer.ans`.
 
 ## Часть 2
 
